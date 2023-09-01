@@ -1,0 +1,16 @@
+module.exports = {
+  semi: true,
+  tabWidth: 2,
+  useTabs: false,
+  printWidth: 100,
+  singleQuote: true,
+  trailingComma: 'all',
+  bracketSpacing: true,
+  arrowParens: 'avoid',
+  bracketSameLine: true,
+  endOfLine: 'auto',
+  importOrder: ['^@core/(.*)$', '^@server/(.*)$', '^@ui/(.*)$', '^[./]'],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
+  plugins: ['prettier-plugin-tailwindcss'],
+};
