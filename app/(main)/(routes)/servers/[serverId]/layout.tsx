@@ -2,7 +2,7 @@ import React from 'react';
 import { db } from '@lib/db';
 import { redirect } from 'next/navigation';
 import { redirectToSignIn } from '@clerk/nextjs';
-import { currentProflie } from '@lib/current-profile';
+import { currentProfile } from '@lib/current-profile';
 import { ServerSidebar } from '@components/server/server-sidebar';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ServerIdLayout = async ({ children, params }: Props) => {
-  const profile = await currentProflie();
+  const profile = await currentProfile();
 
   if (!profile) return redirectToSignIn();
 
@@ -32,7 +32,7 @@ const ServerIdLayout = async ({ children, params }: Props) => {
 
   return (
     <div className="h-full">
-      <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
+      <div className="fixed inset-y-0 z-20 hidden h-full w-60 flex-col md:flex">
         <ServerSidebar serverId={params.serverId} />
       </div>
       <main className="h-full md:pl-60">{children}</main>

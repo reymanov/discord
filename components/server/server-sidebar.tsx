@@ -1,4 +1,4 @@
-import { currentProflie } from '@lib/current-profile';
+import { currentProfile } from '@lib/current-profile';
 import { db } from '@lib/db';
 import { ChannelType } from '@prisma/client';
 import { redirect } from 'next/navigation';
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const ServerSidebar = async ({ serverId }: Props) => {
-  const profile = await currentProflie();
+  const profile = await currentProfile();
 
   if (!profile) return redirect('/');
 
@@ -44,7 +44,7 @@ export const ServerSidebar = async ({ serverId }: Props) => {
   const role = server.members.find(member => member.profileId === profile.id)?.role;
 
   return (
-    <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">
+    <div className="flex h-full w-full flex-col bg-[#F2F3F5] text-primary dark:bg-[#2B2D31]">
       <ServerHeader server={server} role={role} />
     </div>
   );
