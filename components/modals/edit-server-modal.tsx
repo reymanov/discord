@@ -28,6 +28,7 @@ import FileUpload from '@components/file-upload';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@hooks/use-modal-store';
+import { useEffect } from 'react';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -38,11 +39,9 @@ const formSchema = z.object({
   }),
 });
 
-export const CreateServerModal = () => {
-  const { isOpen, onClose, type } = useModal();
+export const EditServerModal = () => {
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
-
-  const isModalOpen = isOpen && type === 'createServer';
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -52,11 +51,20 @@ export const CreateServerModal = () => {
     },
   });
 
+  const isModalOpen = isOpen && type === 'editServer';
   const isLoading = form.formState.isSubmitting;
+  const { server } = data;
+
+  useEffect(() => {
+    if (server && isModalOpen && form.getValues('name') === '') {
+      form.setValue('name', server.name);
+      form.setValue('imageUrl', server.imageUrl);
+    }
+  }, [form, server, isModalOpen]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post('/api/servers', values);
+      await axios.patch(`/api/servers/${server?.id}`, values);
       form.reset();
       router.refresh();
       onClose();
@@ -76,7 +84,7 @@ export const CreateServerModal = () => {
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
-          <DialogTitle className="text-center text-2xl font-bold">Create a new server</DialogTitle>
+          <DialogTitle className="text-center text-2xl font-bold">Server Settings</DialogTitle>
 
           <DialogDescription className="text-center text-zinc-500">
             Give your server a personality with a name and an icon. <br /> You can always change it
@@ -127,7 +135,7 @@ export const CreateServerModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading} className="w-full">
-                Create
+                Save
               </Button>
             </DialogFooter>
           </form>
