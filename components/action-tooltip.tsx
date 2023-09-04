@@ -16,7 +16,7 @@ export const ActionTooltip = ({ label, children, side, align }: Props) => {
         <TooltipTrigger asChild>{children}</TooltipTrigger>
 
         <TooltipContent side={side} align={align}>
-          <p className="font-semibold text-sm capitalize">{label}</p>
+          <p className="text-sm font-semibold capitalize">{label}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
