@@ -22,7 +22,6 @@ import {
   Shield,
   ShieldAlert,
   ShieldCheck,
-  ShieldIcon,
   ShieldQuestion,
 } from 'lucide-react';
 import {
