@@ -12,12 +12,10 @@ import { Command, Search } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-type DataType = 'channel' | 'member';
-
 interface Props {
   data: {
     label: string;
-    type: DataType;
+    type: 'channel' | 'member';
     data?: {
       icon: React.ReactNode;
       name: string;
@@ -44,7 +42,7 @@ export const ServerSearch = ({ data }: Props) => {
 
   const isMacOS = navigator.userAgent.toLowerCase().indexOf('mac') > -1;
 
-  const onClick = ({ id, type }: { id: string; type: DataType }) => {
+  const onClick = ({ id, type }: { id: string; type: 'channel' | 'member' }) => {
     setOpen(false);
 
     if (type === 'member') return router.push(`/servers/${params?.serverId}/conversations/${id}`);
