@@ -111,7 +111,7 @@ export const ServerSidebar = async ({ serverId }: Props) => {
 
         <Separator className="my-2 rounded-md bg-zinc-200 dark:bg-zinc-700" />
 
-        {textChannels?.length && (
+        {!!textChannels?.length && (
           <div className="mb-2">
             <ServerSection
               label="Text Channels"
@@ -127,7 +127,7 @@ export const ServerSidebar = async ({ serverId }: Props) => {
           </div>
         )}
 
-        {audioChannels?.length && (
+        {!!audioChannels?.length && (
           <div className="mb-2">
             <ServerSection
               label="Voice Channels"
@@ -143,7 +143,7 @@ export const ServerSidebar = async ({ serverId }: Props) => {
           </div>
         )}
 
-        {videoChannels?.length && (
+        {!!videoChannels?.length && (
           <div className="mb-2">
             <ServerSection
               label="Video Channels"
@@ -159,7 +159,7 @@ export const ServerSidebar = async ({ serverId }: Props) => {
           </div>
         )}
 
-        {members?.length && (
+        {!!members?.length && (
           <div className="mb-2">
             <ServerSection label="Members" sectionType="members" role={role} server={server} />
             <div className="space-y-[2px]">

@@ -32,7 +32,7 @@ export const ServerMember = ({ member, server }: Props) => {
 
       <p
         className={cn(
-          'text-sm font-semibold text-zinc-500 transition group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300',
+          'text-xs font-semibold text-zinc-500 transition group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300',
           params?.channelId === member.id &&
             'text-primary dark:text-zinc-200 dark:group-hover:text-white',
         )}>

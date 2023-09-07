@@ -40,8 +40,6 @@ export const ServerSearch = ({ data }: Props) => {
     return () => document.removeEventListener('keydown', down);
   }, []);
 
-  const isMacOS = navigator.userAgent.toLowerCase().indexOf('mac') > -1;
-
   const onClick = ({ id, type }: { id: string; type: 'channel' | 'member' }) => {
     setOpen(false);
 
@@ -61,13 +59,7 @@ export const ServerSearch = ({ data }: Props) => {
         </p>
 
         <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-          {isMacOS ? (
-            <>
-              <Command className="h-3 w-3" />K
-            </>
-          ) : (
-            <>CTRL K</>
-          )}
+          <Command className="h-3 w-3" />K
         </kbd>
       </button>
 

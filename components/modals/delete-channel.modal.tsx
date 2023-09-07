@@ -14,23 +14,31 @@ import { useModal } from '@hooks/use-modal-store';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import qs from 'query-string';
 
-export const DeleteServerModal = () => {
+export const DeleteChannelModal = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { isOpen, onOpen, onClose, type, data } = useModal();
+  const { isOpen, type, data, onClose } = useModal();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === 'deleteServer';
-  const { server } = data;
+  const isModalOpen = isOpen && type === 'deleteChannel';
+  const { server, channel } = data;
 
   const onConfirm = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/servers/${server?.id}`);
+      const url = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: {
+          serverId: server?.id,
+        },
+      });
+
+      await axios.delete(url);
 
       onClose();
       router.refresh();
-      router.push('/');
+      router.push(`/servers/${server?.id}`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -42,10 +50,10 @@ export const DeleteServerModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[420px] overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
-          <DialogTitle className="text-center text-2xl font-bold">Delete Server</DialogTitle>
+          <DialogTitle className="text-center text-2xl font-bold">Delete Channel</DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
             Are you sure you want to do this? <br />
-            <span className="font-semibold text-indigo-500">{server?.name}</span> will be
+            Channel <span className="font-semibold text-indigo-500">#{channel?.name}</span> will be
             permanently deleted.
           </DialogDescription>
         </DialogHeader>
