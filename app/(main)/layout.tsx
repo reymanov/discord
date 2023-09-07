@@ -1,5 +1,5 @@
-import NavigatorSidebar from '@components/navigation/navigation-sidebar';
-import React from 'react';
+import { NavigationSidebar } from '@components/navigation/navigation-sidebar';
+
 interface Props {
   children: React.ReactNode;
 }
@@ -7,11 +7,11 @@ interface Props {
 const MainLayout = async ({ children }: Props) => {
   return (
     <div className="h-full">
-      <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0">
-        <NavigatorSidebar />
+      <div className="fixed inset-y-0 z-30 hidden h-full w-[72px] flex-col md:flex">
+        <NavigationSidebar />
       </div>
 
-      <main className="md:pl-[72px] h-full">{children}</main>
+      <main className="h-full md:pl-[72px]">{children}</main>
     </div>
   );
 };
