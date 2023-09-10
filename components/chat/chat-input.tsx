@@ -8,6 +8,7 @@ import { Plus, Smile } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import qs from 'query-string';
 import axios from 'axios';
+import { useModal } from '@hooks/use-modal-store';
 
 interface Props {
   apiUrl: string;
@@ -21,6 +22,7 @@ const formSchema = z.object({
 });
 
 export const ChatInput = ({ apiUrl, query, name, type }: Props) => {
+  const { onOpen } = useModal();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +57,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: Props) => {
                 <div className="relative p-4 pb-4">
                   <button
                     type="button"
-                    onClick={() => {}}
+                    onClick={() => onOpen('messageFile', { apiUrl, query })}
                     className="absolute left-8 top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-zinc-500 p-1 transition hover:bg-zinc-600 dark:bg-zinc-400 dark:hover:bg-zinc-300">
                     <Plus className="text-white dark:text-[#313338]" />
                   </button>
