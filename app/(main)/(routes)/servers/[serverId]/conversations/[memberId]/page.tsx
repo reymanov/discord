@@ -1,9 +1,11 @@
-import { redirectToSignIn } from '@clerk/nextjs';
-import { ChatHeader } from '@components/chat/chat-header';
-import { getOrCreateConversation } from '@lib/conversation';
-import { currentProfile } from '@lib/current-profile';
 import { db } from '@lib/db';
 import { redirect } from 'next/navigation';
+import { currentProfile } from '@lib/current-profile';
+import { redirectToSignIn } from '@clerk/nextjs';
+import { ChatHeader } from '@components/chat/chat-header';
+import { ChatInput } from '@components/chat/chat-input';
+import { ChatMessages } from '@components/chat/chat-messages';
+import { getOrCreateConversation } from '@lib/conversation';
 
 interface Props {
   params: {
@@ -38,12 +40,32 @@ const MemberIdPage = async ({ params }: Props) => {
   const otherMember = memberOne.id === currentMember.id ? memberTwo : memberOne;
 
   return (
-    <div className="flex flex-col bg-white dark:bg-[#313338]">
+    <div className="flex h-full flex-col bg-white dark:bg-[#313338]">
       <ChatHeader
         type="conversation"
         serverId={serverId}
         name={otherMember.profile.name}
         imageUrl={otherMember.profile.imageUrl}
+      />
+
+      <ChatMessages
+        member={currentMember}
+        name={otherMember.profile.name}
+        chatId={conversation.id}
+        type="conversation"
+        apiUrl="/api/direct-messages"
+        paramKey="conversationId"
+        paramValue={conversation.id}
+        socketUrl="/api/socket/direct-messages"
+        socketQuery={{ conversationId: conversation.id }}
+      />
+      <ChatInput
+        name={otherMember.profile.name}
+        type="conversation"
+        apiUrl="/api/socket/direct-messages"
+        query={{
+          conversationId: conversation.id,
+        }}
       />
     </div>
   );
